@@ -3,7 +3,8 @@
 	Braden Kay - 28/1/24 - Basic logic sim, eventually I plan to increase it to operate as a circuit simulator
 	
 	basically the point of this is to get my head around using nodes and linking these to binary logic before we make it analogue
-
+	
+	end goal is to have these all as C functions, but call from a python front end, makes it easier for people to play with but keeps the fun stuff in c
 */
 
 
@@ -72,7 +73,7 @@ int updateGate(gate_t *currentGate) {
 			currentGate->outputA->value = (currentGate->inputA->value ^ currentGate->inputB->value);
 			break;
 		default:
-				printf("Roses are red, violets are blue, thats not a gate, s t f u\n");
+				printf("Roses are red, violets are blue, thats not a gate, now go home my bru\n");
 			break;
 	}
 	
@@ -80,6 +81,23 @@ int updateGate(gate_t *currentGate) {
 		printf("gateoutput of %d - %d is now %d with inputs %d and %d\n\n", currentGate->gateType, currentGate->gateId, currentGate->outputA->value, currentGate->inputA->value, currentGate->inputB->value);
 	}
 }
+
+
+int setup(gate_t **activeGates, node_t **activeNodes) {
+	
+	// holding function to keep environment setups separate
+	
+	*activeGates = (gate_t *) malloc(MAX_GATES * sizeof(gate_t));
+	*activeNodes = (node_t *) malloc(MAX_GATES * sizeof(node_t));
+	
+	if (DEBUG) {
+		printf("Setup Completed succesfully\n");
+	}
+	
+	
+	return 0;
+}
+
 
 
 int main(void) {
@@ -90,8 +108,10 @@ int main(void) {
 	
 	int nodeOrderslist[] = {0, 0, 1, 2, 0, 0, 1, 2, 3};
 
-	gate_t *activeGates = (gate_t *) malloc(MAX_GATES * sizeof(gate_t));
-	node_t *activeNodes = (node_t *) malloc(MAX_GATES * sizeof(node_t));
+	gate_t *activeGates;
+	node_t *activeNodes;
+	
+	setup(&activeGates, &activeNodes);
 	
 	for (int i=0; i<9; i++) {
 		//create nodes for use later
