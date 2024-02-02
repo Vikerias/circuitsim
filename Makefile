@@ -2,6 +2,7 @@ bld/c-sim.o: src/main.c
 	gcc -c src/main.c -o bld/c-sim.o
 	
 all: bld/c-sim.o
+	mkdir -p bld
 	gcc bld/c-sim.o -o c-sim-exec
 	
 	
