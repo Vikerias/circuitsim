@@ -7,8 +7,8 @@ setup:
 all: setup bld/c-sim.o
 	gcc bld/c-sim.o -o c-sim-exec
 	
-run: c-sim-exec
-	./c-sim.exec
+run: all
+	./c-sim-exec
 	
 clean:
 	rm -f bld/*
