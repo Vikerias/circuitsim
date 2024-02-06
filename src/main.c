@@ -28,8 +28,11 @@
 #define NAND 	4
 #define XOR  	5
 
+// constants for comparisons and conversions when reading files
 #define N_KWD	"NODE"
 #define G_KWD	"GATE"
+#define A_0_OFF	'0'
+#define A_9_OFF '9'
 
 typedef struct {
 	int nodeId;
@@ -83,6 +86,30 @@ int updateGate(gate_t *currentGate) {
 	if (DEBUG) {
 		printf("gateoutput of %d - %d is now %d with inputs %d and %d\n\n", currentGate->gateType, currentGate->gateId, currentGate->outputA->value, currentGate->inputA->value, currentGate->inputB->value);
 	}
+}
+
+int stoi(const char *str) {
+	//converts a string of number characters to a single integer
+	//requires some preprocessing (one integer at a time)
+	
+	int i=0;
+	int stoiInt = 0;
+	
+	char currChar = str[i];
+	
+	while (currChar != '\0') {
+		if ((currChar >= A_0_OFF) && (currChar <= A_9_OFF)) {
+			stoiInt = stoiInt * 10 + (currChar - A_0_OFF);
+			i++;
+			currChar = str[i];
+		} else {
+			//some kind of issue, wrong character detected, abort	
+			stoiInt = 0;
+			currChar = '\0';
+		}
+	}
+	
+	return stoiInt;
 }
 
 
