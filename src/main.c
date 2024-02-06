@@ -28,6 +28,9 @@
 #define NAND 	4
 #define XOR  	5
 
+#define N_KWD	"NODE"
+#define G_KWD	"GATE"
+
 typedef struct {
 	int nodeId;
 	int value;
@@ -83,6 +86,38 @@ int updateGate(gate_t *currentGate) {
 }
 
 
+int readNetworkfile() {
+	//reads from a text network file, and creates nodes and gates from it
+	//currently hardcoded to open "netfile.txt" from current directory
+	
+	int success = 0;
+	
+	ssize_t read;
+	size_t len = 0;
+	char *line = NULL;
+	
+	FILE *ptr;
+	ptr = fopen("netfile.txt", "r");
+	
+	if (ptr == NULL) {
+		printf("Failed to open netfile, aborting\n");
+		success = 1;
+	} else {
+		int i = 0;
+		while((read = getline(&line, &len, ptr)) != -1) {
+			printf("Raw dump line %d: %s : length %d\n", i, line, read);
+			i++;
+		}
+	}
+	
+	if (ptr) {
+		fclose(ptr);
+	}
+	
+	
+	return success;
+}
+
 int setup(gate_t **activeGates, node_t **activeNodes) {
 	
 	// holding function to keep environment setups separate
@@ -108,6 +143,9 @@ int main(void) {
 	
 	int nodeOrderslist[] = {0, 0, 1, 2, 0, 0, 1, 2, 3};
 
+	
+	readNetworkfile();
+	
 	gate_t *activeGates;
 	node_t *activeNodes;
 	
