@@ -173,6 +173,10 @@ int main(void) {
 	
 	readNetworkfile();
 	
+	char testString[] = "1250\0";
+	
+	printf("Test with %s -> %d\n", testString, stoi(testString));
+	
 	gate_t *activeGates;
 	node_t *activeNodes;
 	
